@@ -17,5 +17,5 @@ for line in f:
         count += 1
         if count < 11:
             print(fields[2])
-    else:
-        break
+        else:
+            break
