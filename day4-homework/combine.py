@@ -23,4 +23,6 @@ for index, sample, sex, stage in df.itertuples():
 
 dfcompiled = pd.DataFrame(compiled)
 
+dfcompiled.to_csv(sys.stdout)
+
 print(dfcompiled)
