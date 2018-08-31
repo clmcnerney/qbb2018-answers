@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-Usage: ./plotting.py <ctab_file> 
+Usage: ./maplot.py <ctab_file> 
 """
 
 import sys
@@ -19,12 +19,12 @@ fpkm2 = df2.loc[:, "FPKM"]
 name1 = sys.argv[1].split(os.sep)[-2]
 name2 = sys.argv[2].split(os.sep)[-2]
 
-fpkm1_log = np.log2(fpkm1 + 1)
-fpkm2_log = np.log2(fpkm2 + 1)
+#fpkm1_log = np.log2(fpkm1 + 1)
+#fpkm2_log = np.log2(fpkm2 + 1)
 
 ratio =  np.log2( (fpkm2 + 1)  / (fpkm1 + 1)   )
 avg = (np.log2(fpkm1 + 1) + np.log2(fpkm2 + 1)) / 2
-
+#determine the two paramaters we will be graphing below
 
 
 fig, ax = plt.subplots()

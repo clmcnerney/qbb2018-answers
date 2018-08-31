@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
 """
-Usage: ./genescript.py <samples.csv> <directory> <sex> <gene_name> 
-Given the gene name and sex, generate a scatter plot of the average FPKM values by transcript
+Usage: ./generalgene.py <samples.csv> <directory> <sex> <gene_name> 
+Given the gene name and sex, generate a scatter plot of the average 
+FPKM values by transcript given any combination of gene names and a sex
 """
 
 import sys
@@ -21,7 +22,6 @@ for i in range(0, len(sys.argv)):
         dictionary = ctab_df.loc[roi, "FPKM"]
         dictionary_df = pd.DataFrame(dictionary)
     avg = dictionary_df.mean(axis = 1)
-    #axis 1 changes the averaging to be from going across the rows to going down the columns
 
     fig, ax = plt.subplots()
     ax.scatter(list(dictionary_df.index), list(avg))
@@ -31,3 +31,5 @@ for i in range(0, len(sys.argv)):
     ax.set_ylabel("average FPKM")
     fig.savefig(str(sys.argv[i]) + ".png")
     plt.close(fig)
+    
+#this is the same thing as the previous question but nestled in a for loop

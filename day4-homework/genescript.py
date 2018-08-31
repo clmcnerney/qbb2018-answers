@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 df = pd.read_csv(sys.argv[2])
+#open samples.csv
 dictionary = {}
 for index, sample, sex, stage in df.itertuples():
     filename = os.path.join(sys.argv[3], sample, "t_data.ctab")
@@ -21,6 +22,7 @@ for index, sample, sex, stage in df.itertuples():
     dictionary_df = pd.DataFrame(dictionary)
 avg = dictionary_df.mean(axis = 1)
 #axis 1 changes the averaging to be from going across the rows to going down the columns
+#this builds a dataframe from a dictionary containing the ctab_df filtered by the gene name, containing an average of the FPKMs
 
 fig, ax = plt.subplots()
 ax.scatter(list(dictionary_df.index), list(avg))
