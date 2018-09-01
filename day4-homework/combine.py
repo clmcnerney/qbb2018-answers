@@ -2,6 +2,7 @@
 
 """
 Usage: ./combine.py <samples.csv> <ctab_dire>
+Make a new ctab file that contains the transcript name and corresponding FPKM values for all 16 samples
 """
 
 import sys
