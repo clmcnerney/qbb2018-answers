@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 """
-Usage: ./05-residuals.py  <5x .bw files> <.ctab> etc
-Plot the residuals from the OLS analysis in a histogram
+Usage: ./06-log.py  <sample1/t_data.ctab> <sample2/t_data.ctab> etc
+Transform response variable gene expression into units of log(FPKM + 1)
 """
 
 import sys
@@ -11,7 +11,6 @@ import pandas as pd
 import numpy as np
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
-import matplotlib.pyplot as plt
 
 compiled_means = {}
 
@@ -28,35 +27,23 @@ mean5 = pd.read_csv(sys.argv[5], sep = "\t", index_col = 0).iloc[:,4]
 #connect histone name to the mean value
 fpkms_name = sys.argv[6].split(os.sep)[-1]
 fpkm = pd.read_csv(sys.argv[6], sep = "\t", index_col = "t_name").loc[:, "FPKM"]
+fpkm = np.log(fpkm + 1)
+#this is the only new aspect to this code, taking the original FPKMs, adding one and then log transforming them, overwriting the original FPKM values in the process
+
 compiled_means = {hist1 : mean1, hist2 : mean2, hist3 : mean3, hist4 : mean4, hist5 : mean5, fpkms_name : fpkm}
-
 compiled_means_df = pd.DataFrame(compiled_means)
-
 compiled_means_df = compiled_means_df.dropna()
 
+#print(compiled_means_df)
 
 y = compiled_means_df.loc[:,fpkms_name]
 X = compiled_means_df.loc[:,[hist1,hist2,hist3,hist4,hist5,]]
 X = sm.add_constant(X)
 
 model = sm.OLS(y, X)
+# model = sm.OLS(y, X)
+# print(model)
 results = model.fit()
+print(results.summary())
 
-#everything until here is the same as the previous assignment
-#everything after here deals with the residuals 
-
-resid = results.resid
-#store the residuals as a variable to refer back to 
-
-fig, ax = plt.subplots()
-ax.hist(resid, bins=5000)
-#generate a histogram - bin size is a bit high but I thought this helped visualize the curve to check for normality
-ax.set_title("Histogram of Residuals from OLS Calculation")
-ax.set_xlabel("Residuals")
-ax.set_ylabel("Counts")
-ax.set_xlim(left=-60, right=75)
-fig.savefig("residuals.png")
-plt.close(fig)
-
-#This curve is definitely skewed and right-tailed, meaning that the data is not normal and so the linear regression is not optimal
-
+#The R^2 value does improve upon log transforming the data

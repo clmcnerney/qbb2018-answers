@@ -2,7 +2,7 @@
 
 """
 Usage: ./02-promoter.py <ctab_file>
-Convert ctab to bed format, converts 
+Make bed file that defines promoter regions 
 -bed: chr start stop name 
 """
 
@@ -27,6 +27,7 @@ for i, line in enumerate(ctab_file):
     #rename variables for convenience
     if "+" in strand:
         if float(start) > 500:
+            #necessary to skip those that are at the end of the chromosome
             new_start = int(start) - 500
             new_end = int(start) + 500
         else:
