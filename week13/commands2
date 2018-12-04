@@ -1,0 +1,9 @@
+
+
+
+
+hifive hic-complete express  -f 25 -n 50 -i 0 -P norm_out -M example.mat.raw -B example.bed
+hifive hic-heatmap -t -b 500000 -d fend -F npz -i heatmap.png norm_out.hcp binned_out.npz
+hifive hic-interval -c chr17 -s 15000000 -e 17500000 -d fend -i heat2.png norm_out.hcp chr17
+./python.py GSM2418860_WT_CTCF_peaks.txt  > enrichments.txt
+
